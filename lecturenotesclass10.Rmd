@@ -1,7 +1,7 @@
 ---
 title: "Introduction to probability"
-author: ""
-date: ""
+author: "Jaden Snyder"
+date: "02/22/21"
 output: html_document
 editor_options: 
   chunk_output_type: console
@@ -11,6 +11,8 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE,
                       comment = "#>", highlight = TRUE,
                       fig.align = "center")
+library(usethis)
+use_git_config(user.name= "jadensnyder", user.email="jaden.snyder@duke.edu")
 ```
 
 ## Upcoming Deadline
@@ -27,6 +29,7 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE,
 
 ```{r packages}
 library(tidyverse)
+install.packages(vcd) # used for Arthritis data
 library(vcd) # used for Arthritis data
 ```
 
@@ -49,18 +52,18 @@ xtabs(~ Treatment + Improved, data = Arthritis) %>%
 ```
 
 - How many patients were enrolled in the clinical trial?
-
+84
 - What is the probability a randomly selected patient received the placebo?
-
+52%
 - What is the probability a randomly selected patient received the placebo
   and had a marked improvement?
-  
+8.3%
 - What is the probability a randomly selected patient received the placebo
   and the treatment?
-  
+0%, disjoint
 - What is the probability a randomly selected patient had some improvement or
   was on the treatment?
-
+57%
 ## Using computer simulations to calculate probabilities
 
 #### Example
@@ -76,6 +79,9 @@ Suppose we draw a single marble from our imaginary box, where all the marbles
 are equally likely to be selected. What is the probability the marble is blue? 
 How about white?
 
+blue- 37.5%
+white- 12.5%
+red- 50%
 We can simulate this "drawing" with the `sample()` function.
 
 ```{r sample}
@@ -101,6 +107,10 @@ prop.table(counts)
 ```
 
 How close is this value to the "true" probability?
+These values are very close to the "true" probabilities. The calculated 
+probability of drawing a blue is 37.5%, and the probability of drawing a white 
+is 12.5%. The probability of drawing a red is 50%. Each of these values is 
+within 5% of the experiment results, so they are very close.
 
 **To summarize our process:**
 
@@ -158,7 +168,8 @@ Perform a simulation to compute this empirical probability.
 Write down your guess to the answer before you calculate it.
 
 ```{r simulate_rolls}
-
+roll_results <- tibble(die_1 = replication(n = 10000, expr = sample(1:6,
+  size = 1)), die_2 = replication(n = 10000, expr = sample(1:6, size = 1)))
 ```
 
 ```{r identify_events}
